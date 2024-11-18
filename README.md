@@ -189,3 +189,103 @@ init
 ```
 
 
+# Практика 2
+
+**complex.cs**
+```
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice2
+{
+    public class Complex//ctrl+RR - refactoring
+    {
+        public double Re { get; set; }
+        public double Im { get; set; }//если ссылочный тип - то NULL по умолчанию
+        //если тип значение - то по дефолту значение равно 0
+        public double AbsoluteValue => Math.Sqrt(Re * Re + Im * Im);
+        public Complex Conjugate => new Complex(Re, -Im);
+        public Complex(double re, double im) {
+            Re = re;
+            Im = im;
+        }
+        public Complex() { }
+        public override string ToString() //переопределение метода, потому что у предка-класса обджект есть уже этот метод
+        {
+            var sb = new StringBuilder();
+            if (Re != 0 || Im ==0) 
+            {
+                sb.Append(Re);
+            }
+            if (Im != 0)
+            {
+                if (Im > 0 && Re != 0)
+                {
+                    sb.Append("+");
+                }
+                else
+                {
+                    sb.Append("-");
+                }
+                if (Math.Abs(Im) != 1)
+                {
+                    sb.Append(Math.Abs(Im));
+                }
+                sb.Append('i');
+            }
+            return sb.ToString();
+
+        }
+    }
+}
+
+```
+
+**Program.cs**
+```
+
+using Practice2;
+using System.Security.Cryptography.X509Certificates;
+
+var z1 = new Complex();
+var z2 = new Complex()
+{
+    Re = 3,
+    Im = 4
+
+};
+var z3 = new Complex(0, -1);
+
+Console.WriteLine(z1);
+Console.WriteLine(z1.AbsoluteValue);
+Console.WriteLine(z1.Conjugate);
+Console.WriteLine(z2);
+Console.WriteLine(z2.AbsoluteValue);
+Console.WriteLine(z2.Conjugate);
+Console.WriteLine(z3);
+Console.WriteLine(z3.AbsoluteValue);
+Console.WriteLine(z3.Conjugate);
+
+
+//конструктор класса - спциальный метод коорый вызывается при создании класса называется точно так же как сам класс
+//любой класс содержит зотя бы один конструктор 
+//конструктор без параметров - конструктор по умолчанию
+
+```
+
+
+
+### ДОМАШКА - ДЕДЛАЙН 28 НОЯБРЯ
+ **разработать класс для работы с римскими числами**  
+ * класс должен позволять производить вычисления с римскими числами (деление целочисленное)в виде операторов  
+   диапазон поддерживаемых значений - до MMMCMXCIX (3999 включительно)  
+ * правила записи римских значений -  классика  
+ * цифры располагаютсся в порядке от больших к меньшим, цифры повторяются не более 3 раз подряд, меньшая записывается перед большей -
+   вычитается из числа - только из тех, которая обозначается через единички
+ *  одно число задать как римское и сложить его с обычным интом(без вещественных)
+ *  результат - класс должен давать возможность узнать и римскую, и арбаскую запись  
+
